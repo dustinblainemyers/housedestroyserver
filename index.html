@@ -66,6 +66,28 @@
             }
         };
 
+        let House = class {
+            constructor() {
+                
+                this.health = 100;
+                this.takeDamage = function(typeOfHit) {
+                    if (typeOfHit === "platform_hit") {
+
+                        this.health = this.health - 100;
+                    }
+                    if (this.health <= 0) {
+
+                        this.disableBody(true, true);
+                    }
+                }
+                this.placeInGame = function() {
+                    house = this.physics.add.sprite(400, 300, 'house').setScale(2);
+                    house.setBounce(0.2);
+                    house.setCollideWorldBounds(true);
+                }
+            }
+        }
+
         
 
             
@@ -76,11 +98,11 @@
             
             servers.create(servers[i].xcoord , servers[i].ycoord , 'server');
         }
-        house = this.physics.add.sprite(400, 300, 'house').setScale(2);
-        house.setBounce(0.2);
-        house.setCollideWorldBounds(true);
+        house = new House();
+        house.placeInGame();
+        
         this.physics.add.collider(house, servers, damageServer, null, this);
-        this.physics.add.collider(house, platforms, houseHit, null, this);
+        this.physics.add.collider(house, platforms, houseHitPlatforms, null, this);
 
         // this.add.image(400, 300, 'house').setScale(2);
         // this.add.image(500, 502.5 , 'server');
@@ -97,7 +119,7 @@
 
     }
 
-    function houseHit (house, platforms) {
+    function houseHitPlatforms (house, platforms) {
 
 
     }
