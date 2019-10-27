@@ -6,3 +6,5 @@ this.add.image(400, 300, 'sky');
 
 look this up later : redblobgames.com/pathfinding/tower-defense/
 reddit r/gamedev
+
+need to point my dns ns to cloudflair so i can have built in https

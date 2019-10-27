@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 1</title>
+    <title>Defend Your Server</title>
     <script src="phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -64,21 +64,23 @@
                 this.ycoord = ycoord;
                 this.health = 100;
             }
+        };
+
+        
 
             
            
-           
-         
-        };
+
         for (i = 50; i <= 750; i = i + 200 ) {
-            servers[i] = new Server(servers[i], i , 502.5);
+            servers[i] = new Server(`server ${i}`, i , 502.5);
             
             servers.create(servers[i].xcoord , servers[i].ycoord , 'server');
         }
         house = this.physics.add.sprite(400, 300, 'house').setScale(2);
         house.setBounce(0.2);
         house.setCollideWorldBounds(true);
-        this.physics.add.collider(house, servers);
+        this.physics.add.collider(house, servers, damageServer, null, this);
+        this.physics.add.collider(house, platforms, houseHit, null, this);
 
         // this.add.image(400, 300, 'house').setScale(2);
         // this.add.image(500, 502.5 , 'server');
@@ -88,6 +90,17 @@
     {
     }
 
+    function damageServer (house, servers) {
+        if (servers.health === 0) {
+        servers.disableBody(true, true);
+        }
+
+    }
+
+    function houseHit (house, platforms) {
+
+
+    }
     
 
 </script>
