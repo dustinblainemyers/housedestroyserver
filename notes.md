@@ -8,3 +8,8 @@ look this up later : redblobgames.com/pathfinding/tower-defense/
 reddit r/gamedev
 
 need to point my dns ns to cloudflair so i can have built in https
+
+
+I need to look at this example code !!! 
+
+https://phaser.io/examples/v3/view/depth-sorting/isometric-map

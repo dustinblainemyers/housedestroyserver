@@ -44,14 +44,18 @@
         this.load.image('server', 'assets/serverpic.jpg')
     }
 
-    var platforms;
-    var servers = {};
+    
   
     function create ()
     
     {
+
+
+        var platforms;
+        var servers = {};
         this.add.image(400, 300, 'sky');
         servers = this.physics.add.staticGroup();
+        
         platforms = this.physics.add.staticGroup();
         platforms.create(400, 585, 'ground').setScale(2).refreshBody();
         // this.add.image(400, 585, 'ground');
@@ -67,26 +71,17 @@
         };
 
         let House = class {
-            constructor() {
-                
-                this.health = 100;
-                this.takeDamage = function(typeOfHit) {
-                    if (typeOfHit === "platform_hit") {
 
-                        this.health = this.health - 100;
-                    }
-                    if (this.health <= 0) {
+            constructor(name, xcoord, ycoord) {
+                this.name = name;
+                this.xcoord = xcoord;
+                this.ycoord = ycoord;
+                this.health = 5;
 
-                        this.disableBody(true, true);
-                    }
-                }
-                this.placeInGame = function() {
-                    house = this.physics.add.sprite(400, 300, 'house').setScale(2);
-                    house.setBounce(0.2);
-                    house.setCollideWorldBounds(true);
-                }
             }
         }
+
+       
 
         
 
@@ -98,30 +93,41 @@
             
             servers.create(servers[i].xcoord , servers[i].ycoord , 'server');
         }
-        house = new House();
-        house.placeInGame();
+        let houses = {};
+        for (i = 100; i < 400; i = i + 100) {
+            houses[i] = new House(`house ${i}`, 400, i);
+            houses[i] = this.physics.add.sprite(400, houses[i].ycoord, 'house').setScale(2);
+            houses[i].setBounce(0.2);
+            houses[i].setCollideWorldBounds(true)
+            this.physics.add.collider(houses[i], servers, damageServer, null, this);
+            this.physics.add.collider(houses[i], platforms, houseHitPlatforms, null, this);
+            
+               
+        }
         
-        this.physics.add.collider(house, servers, damageServer, null, this);
-        this.physics.add.collider(house, platforms, houseHitPlatforms, null, this);
-
-        // this.add.image(400, 300, 'house').setScale(2);
-        // this.add.image(500, 502.5 , 'server');
+         
+        
+        
     }
 
     function update ()
     {
     }
 
-    function damageServer (house, servers) {
+    function damageServer (houses, servers) {
+        servers.name.health = servers.name.health - 40;
+        
         if (servers.health === 0) {
         servers.disableBody(true, true);
         }
 
+        houses.disableBody(true, true);
+
     }
 
-    function houseHitPlatforms (house, platforms) {
+    function houseHitPlatforms (houses, platforms) {
 
-
+        houses.disableBody(true, true);
     }
     
 
